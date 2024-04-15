@@ -8,14 +8,18 @@ import dotenv from "dotenv"; // 导入image路由
 import ConnectSessionSequelize from 'connect-session-sequelize';
 import path from "path";
 
-const port = 3000
+const port = 80
 const app = express();
 const dbTool = new DbTool(); // 创建DbTool实例
 const SequelizeStore = ConnectSessionSequelize(session.Store);
 
-// 托管静态文件
-app.use(express.static(path.resolve(__dirname, '../dist')));
+// 设定静态文件目录
+app.use(express.static(path.join(__dirname, 'dist'), { index: false }));
 
+// 所有路由请求都返回index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 // Body parser middleware to handle JSON payloads
 app.use('/uploads', express.static('uploads'));
 
