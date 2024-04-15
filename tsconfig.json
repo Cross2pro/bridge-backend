@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    },
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "NodeNext",
+    "strict": false,
+    "esModuleInterop": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "types.d.ts", // Add this line
+    "**/*.ts",
+    "**/*.tsx",
+    "./**/*.ts",
+
+  ],
+  "exclude": ["node_modules"]
+}

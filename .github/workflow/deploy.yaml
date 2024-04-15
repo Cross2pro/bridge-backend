@@ -1,0 +1,48 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - main  # 或者是你用于部署的分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # 根据你的后端应用选择Node.js版本
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test
+        run: npm test  # 假设你有测试脚本
+
+      - name: Transfer files to the server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.DEPLOY_SERVER }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: 22
+          source: "."
+          target: "/path/to/your/backend/directory"
+          rm: true  # 移除目标目录中的所有文件
+
+      - name: SSH command to restart server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_SERVER }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: 22
+          script: |
+            cd /path/to/your/backend/directory
+            npm install --production
+            pm2 restart app  # 假设你使用 pm2 来管理你的应用
