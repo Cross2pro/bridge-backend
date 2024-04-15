@@ -16,7 +16,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # 根据你的后端应用选择Node.js版本
+          node-version: '16'  # 根据你的后端应用选择Node.js版本
 
       - name: Install dependencies
         run: npm install
@@ -32,7 +32,7 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           port: 22
           source: "."
-          target: "/path/to/your/backend/directory"
+          target: "/root/www/bridge-app"
           rm: true  # 移除目标目录中的所有文件
 
       - name: SSH command to restart server
