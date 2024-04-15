@@ -42,4 +42,4 @@ jobs:
           script: |
             cd /root/www/bridge-app
             npm install --production
-            pm2 restart bridge-app  # 假设你使用 pm2 来管理你的应用
+            pm2 restart bridge-app
