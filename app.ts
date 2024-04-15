@@ -8,7 +8,7 @@ import dotenv from "dotenv"; // 导入image路由
 import ConnectSessionSequelize from 'connect-session-sequelize';
 import path from "path";
 
-const port = 80
+const port = 3000;
 const app = express();
 const dbTool = new DbTool(); // 创建DbTool实例
 const SequelizeStore = ConnectSessionSequelize(session.Store);
