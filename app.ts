@@ -6,11 +6,15 @@ import imageRouter from './routes/image';
 import responseWrapper from "./middlewares/responseWrapper";
 import dotenv from "dotenv"; // 导入image路由
 import ConnectSessionSequelize from 'connect-session-sequelize';
+import path from "path";
 
 const port = 3000
 const app = express();
 const dbTool = new DbTool(); // 创建DbTool实例
 const SequelizeStore = ConnectSessionSequelize(session.Store);
+
+// 托管静态文件
+app.use(express.static(path.resolve(__dirname, '../dist')));
 
 // Body parser middleware to handle JSON payloads
 app.use('/uploads', express.static('uploads'));
