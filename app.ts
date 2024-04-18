@@ -42,14 +42,15 @@ app.use('/api/user', userRouter);
 app.use('/api/picture-card', imageRouter);
 app.use('/api/contact',contact);
 
-// catch 404 and forward to error handler
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.status(404).json({ message: 'Not Found' });
-});
 // 所有路由请求都返回index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
+// catch 404 and forward to error handler
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.status(404).json({ message: 'Not Found' });
+});
+
 
 // error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
