@@ -7,6 +7,7 @@ import responseWrapper from "./middlewares/responseWrapper";
 import dotenv from "dotenv"; // 导入image路由
 import ConnectSessionSequelize from 'connect-session-sequelize';
 import path from "path";
+import contact from "./routes/contact";
 
 const port = 3000;
 const app = express();
@@ -16,11 +17,7 @@ const SequelizeStore = ConnectSessionSequelize(session.Store);
 // 设定静态文件目录
 app.use(express.static(path.join(__dirname, 'dist'), { index: false }));
 
-// 所有路由请求都返回index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-// Body parser middleware to handle JSON payloads
+
 app.use('/uploads', express.static('uploads'));
 
 app.use(express.json());
@@ -43,10 +40,15 @@ app.use(responseWrapper); // 使用响应包装器中间件
 // app.use('/users', usersRouter);
 app.use('/api/user', userRouter);
 app.use('/api/picture-card', imageRouter);
+app.use('/api/contact',contact);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404).json({ message: 'Not Found' });
+});
+// 所有路由请求都返回index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // error handler

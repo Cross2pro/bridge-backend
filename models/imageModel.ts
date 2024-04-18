@@ -6,7 +6,7 @@ interface ImageAttributes {
     id: number;
     user_id: number | null;
     image_path: string;
-    detect_path: string | null;
+    mask: Object | null;
     detect: boolean | null;
 }
 
@@ -16,7 +16,7 @@ class Image extends Model<ImageAttributes, ImageCreationAttributes> implements I
     public id!: number;
     public user_id!: number | null;
     public image_path!: string;
-    public detect_path!: string | null;
+    mask!: Object | null;
     public detect!: boolean | null;
 
     public readonly createdAt!: Date;
@@ -40,8 +40,8 @@ Image.init(
             type: new DataTypes.STRING(255),
             allowNull: false,
         },
-        detect_path: {
-            type: new DataTypes.STRING(255),
+        mask: {
+            type: new DataTypes.JSON,
             allowNull: true,
         },
         detect: {

@@ -49,8 +49,10 @@ router.post('/login', recaptchaValidator,async (req: Request, res: Response) => 
     const user = await User.findOne({ where: { username } });
     if (user && user.password === password) {
         req.session.user = user; // 设置 session
+
         req.session.save();
-        res.json({ status: 'success', message: 'Login successful' });
+
+        res.json({ status: 'success', message: 'Login successful',token:req.session.id});
     } else {
         res.json({ status: 'error', message: 'Invalid username or password' });
     }

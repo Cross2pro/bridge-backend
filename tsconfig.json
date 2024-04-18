@@ -10,6 +10,7 @@
     "module": "commonjs",
     "moduleResolution": "NodeNext",
     "strict": false,
+    "allowJs": true,
     "esModuleInterop": true,
     "outDir": "dist"
   },
