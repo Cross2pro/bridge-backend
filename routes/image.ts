@@ -9,6 +9,7 @@ import axios from "axios";
 import decodeMask from "../utils/decodeMask";
 import sizeOf, {imageSize} from "image-size";
 import imageModel from "../models/imageModel";
+import {Op} from "sequelize";
 const router = express.Router();
 
 /**
@@ -37,7 +38,45 @@ async function getAccessToken() {
     }
 }
 
+router.get('/mask/:imageId', async function (req, res, next) {
+    const imageId = req.params.imageId;
+    if (!imageId) {
+        return res.json({ status: 'error', message: 'Missing imageId parameter.' });
+    }
 
+    const image = await Image.findOne({ where: { id: imageId }, attributes: ['mask']});
+    if (!image) {
+        return res.json({ status: 'error', message: 'Image not found.' });
+    }
+    res.json({ status: 'success', mask: image.mask });
+});
+
+router.get('/info/recent', async (req, res, next) => {
+    try {
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+        const recentUploadsCount = await Image.count({
+            where: {
+                createdAt: {
+                    [Op.gte]: sevenDaysAgo
+                }
+            }as any
+        });
+
+        const totalUploadsCount = await Image.count();
+
+        res.json({
+            status: 'success',
+            data: {
+                recentUploadsCount,
+                totalUploadsCount
+            }
+        });
+    } catch (err) {
+        next(err);
+    }
+});
 router.post('/list', async function (req, res, next) {
     const pageSize = Number(req.query.pageSize||10);
     const pageIndex = Number(req.query.pageIndex||1);
