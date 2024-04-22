@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'dist'), { index: false }));
 
 
 app.use('/uploads', express.static('uploads'));
+app.use('/app', express.static('apps'));
 
 app.use(express.json());
 app.use(session({
@@ -37,7 +38,7 @@ app.use(responseWrapper); // 使用响应包装器中间件
 // Your routes go here
 // For example, you might have a users route like this:
 // import usersRouter from './routes/users';
-// app.use('/users', usersRouter);
+// apps.use('/users', usersRouter);
 app.use('/api/user', userRouter);
 app.use('/api/picture-card', imageRouter);
 app.use('/api/contact',contact);

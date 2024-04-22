@@ -20,7 +20,9 @@ async function recaptchaValidator(req: Request, res: Response, next: NextFunctio
         if (!recaptchaResponse.data.success) {
             return res.json({ status: 'error', message: 'reCAPTCHA verification failed' });
         }
-
+        if (recaptchaResponse.data.score < 0.7) {
+            return res.json({ status: 'error', message: 'reCAPTCHA verification failed' });
+        }
         next();
     } catch (error) {
        return res.json({ status: 'error', message: 'reCAPTCHA verification failed', error });

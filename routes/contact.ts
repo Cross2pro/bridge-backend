@@ -16,6 +16,7 @@ router.post('/form', async function (req, res, next) {
         res.json({ status: 'success', message: 'Contact saved successfully', contact });
     } catch (err) {
         next(err);
+
     }
 });
 

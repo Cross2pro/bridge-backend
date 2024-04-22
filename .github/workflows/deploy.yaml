@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           port: 22
           source: "."
-          target: "/root/www/bridge-app"
+          target: "/root/www/bridge-apps"
           rm: true  # 移除目标目录中的所有文件
 
       - name: SSH command to restart server
